@@ -11,18 +11,18 @@ const main = () => {
 
 
     const setup = () => {
-        const actor = new UGOCAS.Actor(UGOCAS.TextureLoader.get('image'));
-        //actor.sprite.x = 100;
-        actor.sprite.y = 100;
-        //actor.sprite.anchor.x = 50;
-        //actor.sprite.anchor.y = 20;
+        const actor = new UGOCAS.SpriteActor(UGOCAS.TextureLoader.get('image'));
+        actor.x = 100;
+        actor.position.set(100, 50);
+        actor.sprite.anchor.x = 52;
+        actor.sprite.anchor.y = 22;
         let v = 1;
         actor.act = (delta, info) => {
-            actor.sprite.x += v;
-            actor.sprite.scale.x = Math.sign(v);
+            actor.x += v;
+            actor.scale.x = Math.sign(v);
 
-            if(actor.sprite.x > 300) v *= -1;
-            if(actor.sprite.x < 0) v*=-1;
+            if(actor.x > 300) v *= -1;
+            if(actor.x < 0) v*=-1;
 
             //actor.sprite.rotation += Math.PI/30*delta;
         }
