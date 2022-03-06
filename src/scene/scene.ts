@@ -3,21 +3,16 @@ import {Mixer} from 'naras.js';
 
 export default class Scene{
     children: Set<Scene> = new Set();
-    stage: Stage = new Stage();
+    protected _stage: Stage = new Stage();
+    get stage(): Stage{
+        return this._stage;
+    }
     mixer: Mixer = new Mixer();
 
     needsInfoNames: Set<string> = new Set();
 
-    constructor(){
 
-    }
-
-    act(delta: number, info?: Object): void{
-    }
-
-    update(delta: number, info?: Object): void{
-        this.act(delta, info);
-
+    update(delta: number, givenInfo?: Object): void{
         this.children.forEach((actor: Scene)=>{
             const info = {};
             actor.needsInfoNames.forEach((name: string)=>{
@@ -39,20 +34,20 @@ export default class Scene{
     }
 
     addChild(scene: Scene): this{
-        this.stage.addChild(scene.stage);
+        this._stage.addChild(scene._stage);
         this.mixer.addChild(scene.mixer);
         this.children.add(scene);
         return this;
     }
     removeChild(scene: Scene): this{
-        this.stage.removeChild(scene.stage);
+        this._stage.removeChild(scene._stage);
         this.mixer.removeChild(scene.mixer);
         this.children.delete(scene);
         return this;
     }
 
     addSprite(sprite: Stage): this{
-        this.stage.addChild(sprite);
+        this._stage.addChild(sprite);
         return this;
     }
     addSound(sound: Mixer): this{

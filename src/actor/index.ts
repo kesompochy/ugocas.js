@@ -1,2 +1,3 @@
 import Actor from './actor';
-export default Actor;
+import SpriteActor from './sprite_actor';
+export {Actor, SpriteActor};

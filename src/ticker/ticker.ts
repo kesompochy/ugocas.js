@@ -1,6 +1,6 @@
 const MILLI = 1000;
 
-type TickingFunc = (delta: number, info?: Object)=>void;
+export type TickingFunc = (delta: number, info?: Object)=>void;
 
 export default class Ticker {
     private _FPS: number = 60;
@@ -25,7 +25,7 @@ export default class Ticker {
     };
 
     private _calcDelta(timeStamp: number): number{
-        const elapsedTime = this._prevTimeStamp - timeStamp;
+        const elapsedTime = timeStamp - this._prevTimeStamp;
         this._prevTimeStamp = timeStamp;
         const delta = Math.min(elapsedTime/this._ecpectedElapsedTime, this.permittedDelay);
         return delta;
