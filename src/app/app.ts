@@ -42,6 +42,16 @@ export default class App {
         this.renderSystem.baseStage.addChild(this.baseScene.stage);
         this.soundSystem.baseMixer.addChild(this.baseScene.mixer);
 
+        this.renderSystem.loader.loadThen(()=>{
+            if(this.soundSystem.loaded){
+                this._loadThen();
+            }
+        })
+        this.soundSystem.loader.loadThen(()=>{
+            if(this.renderSystem.loaded){
+                this._loadThen();
+            }
+        })
 
 
         this.ticker.add(this.baseScene.update);

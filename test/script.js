@@ -8,6 +8,14 @@ const main = () => {
         height: 400,
         canvas: canvas,
     });
+
+    const setup = () => {
+        console.log('setup');
+    };
+
+
+    app.loadThen(setup);
+    app.loadAll();
     
 }
 
