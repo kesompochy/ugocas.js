@@ -96,11 +96,60 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.SpriteActor = exports.Actor = void 0;
+exports.SoundActor = exports.SpriteActor = exports.Actor = void 0;
 var actor_1 = __importDefault(__webpack_require__(/*! ./actor */ "./src/actor/actor.ts"));
 exports.Actor = actor_1.default;
 var sprite_actor_1 = __importDefault(__webpack_require__(/*! ./sprite_actor */ "./src/actor/sprite_actor.ts"));
 exports.SpriteActor = sprite_actor_1.default;
+var sound_actor_1 = __importDefault(__webpack_require__(/*! ./sound_actor */ "./src/actor/sound_actor.ts"));
+exports.SoundActor = sound_actor_1.default;
+
+
+/***/ }),
+
+/***/ "./src/actor/sound_actor.ts":
+/*!**********************************!*\
+  !*** ./src/actor/sound_actor.ts ***!
+  \**********************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var actor_1 = __importDefault(__webpack_require__(/*! ./actor */ "./src/actor/actor.ts"));
+var naras_js_1 = __webpack_require__(/*! naras.js */ "./node_modules/naras.js/dist/naras.min.js");
+var SoundActor = /** @class */ (function (_super) {
+    __extends(SoundActor, _super);
+    function SoundActor(audio) {
+        var _this = _super.call(this) || this;
+        _this._sound = new naras_js_1.Sound(audio);
+        _this._mixer.addChild(_this._sound);
+        return _this;
+    }
+    SoundActor.prototype.play = function () {
+        this.mixer.play();
+    };
+    return SoundActor;
+}(actor_1.default));
+exports["default"] = SoundActor;
 
 
 /***/ }),
@@ -372,7 +421,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.TextureLoader = exports.Text = exports.Stage = exports.Sprite = exports.SoundLoader = exports.Mixer = exports.Sound = exports.SpriteActor = exports.Actor = exports.Scene = exports.App = void 0;
+exports.TextureLoader = exports.Text = exports.Stage = exports.Sprite = exports.AudioLoader = exports.Mixer = exports.Sound = exports.SoundActor = exports.SpriteActor = exports.Actor = exports.Scene = exports.App = void 0;
 var app_1 = __importDefault(__webpack_require__(/*! ./app */ "./src/app/index.ts"));
 exports.App = app_1.default;
 var scene_1 = __importDefault(__webpack_require__(/*! ./scene */ "./src/scene/index.ts"));
@@ -380,6 +429,7 @@ exports.Scene = scene_1.default;
 var actor_1 = __webpack_require__(/*! ./actor */ "./src/actor/index.ts");
 Object.defineProperty(exports, "Actor", ({ enumerable: true, get: function () { return actor_1.Actor; } }));
 Object.defineProperty(exports, "SpriteActor", ({ enumerable: true, get: function () { return actor_1.SpriteActor; } }));
+Object.defineProperty(exports, "SoundActor", ({ enumerable: true, get: function () { return actor_1.SoundActor; } }));
 var EGAK = __importStar(__webpack_require__(/*! egak.js */ "./node_modules/egak.js/dist/egak.min.js"));
 var NARAS = __importStar(__webpack_require__(/*! naras.js */ "./node_modules/naras.js/dist/naras.min.js"));
 var Sprite = EGAK.Sprite, Stage = EGAK.Stage, Text = EGAK.Text, TextureLoader = EGAK.Loader;
@@ -387,10 +437,10 @@ exports.Sprite = Sprite;
 exports.Stage = Stage;
 exports.Text = Text;
 exports.TextureLoader = TextureLoader;
-var Sound = NARAS.Sound, Mixer = NARAS.Mixer, SoundLoader = NARAS.Loader;
+var Sound = NARAS.Sound, Mixer = NARAS.Mixer, AudioLoader = NARAS.Loader;
 exports.Sound = Sound;
 exports.Mixer = Mixer;
-exports.SoundLoader = SoundLoader;
+exports.AudioLoader = AudioLoader;
 
 
 /***/ }),
@@ -428,12 +478,19 @@ var Scene = /** @class */ (function () {
     function Scene() {
         this.children = new Set();
         this._stage = new egak_js_1.Stage();
-        this.mixer = new naras_js_1.Mixer();
+        this._mixer = new naras_js_1.Mixer();
         this.needsInfoNames = new Set();
     }
     Object.defineProperty(Scene.prototype, "stage", {
         get: function () {
             return this._stage;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(Scene.prototype, "mixer", {
+        get: function () {
+            return this._mixer;
         },
         enumerable: false,
         configurable: true
@@ -464,22 +521,14 @@ var Scene = /** @class */ (function () {
     };
     Scene.prototype.addChild = function (scene) {
         this._stage.addChild(scene._stage);
-        this.mixer.addChild(scene.mixer);
+        this._mixer.addChild(scene._mixer);
         this.children.add(scene);
         return this;
     };
     Scene.prototype.removeChild = function (scene) {
         this._stage.removeChild(scene._stage);
-        this.mixer.removeChild(scene.mixer);
+        this._mixer.removeChild(scene._mixer);
         this.children.delete(scene);
-        return this;
-    };
-    Scene.prototype.addSprite = function (sprite) {
-        this._stage.addChild(sprite);
-        return this;
-    };
-    Scene.prototype.addSound = function (sound) {
-        this.mixer.addChild(sound);
         return this;
     };
     return Scene;

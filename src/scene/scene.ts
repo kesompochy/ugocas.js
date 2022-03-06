@@ -7,7 +7,10 @@ export default class Scene{
     get stage(): Stage{
         return this._stage;
     }
-    mixer: Mixer = new Mixer();
+    protected _mixer: Mixer = new Mixer();
+    get mixer(): Mixer{
+        return this._mixer;
+    }
 
     needsInfoNames: Set<string> = new Set();
 
@@ -35,23 +38,14 @@ export default class Scene{
 
     addChild(scene: Scene): this{
         this._stage.addChild(scene._stage);
-        this.mixer.addChild(scene.mixer);
+        this._mixer.addChild(scene._mixer);
         this.children.add(scene);
         return this;
     }
     removeChild(scene: Scene): this{
         this._stage.removeChild(scene._stage);
-        this.mixer.removeChild(scene.mixer);
+        this._mixer.removeChild(scene._mixer);
         this.children.delete(scene);
-        return this;
-    }
-
-    addSprite(sprite: Stage): this{
-        this._stage.addChild(sprite);
-        return this;
-    }
-    addSound(sound: Mixer): this{
-        this.mixer.addChild(sound);
         return this;
     }
 }
