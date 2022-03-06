@@ -3,17 +3,21 @@ import * as NARAS from 'naras.js';
 import Ticker from '../ticker';
 import Scene from '../scene';
 
+
 interface IAppOptions {
     width?: number;
     height?: number;
     autoStart?: boolean;
     canvas?: HTMLCanvasElement;
+    autoStyleCanvas?: boolean;
+
 }
-const defaultAppOptions = {
+const defaultAppOptions: IAppOptions = {
     width: 300,
     height: 400,
     autoStart: false,
-    canvas: document.createElement('canvas')
+    canvas: document.createElement('canvas'),
+    autoStyleCanvas: false,
 } as const;
  
 export default class App {
@@ -54,21 +58,19 @@ export default class App {
         })
 
 
-        this.ticker.add(this.baseScene.update);
+        this.ticker.add(this.mainLoop.bind(this));
         if(options.autoStart!){
             this.ticker.start();
         }
-
-        
     }
     start(): void{
         this.ticker.start();
     }
-    addImageResource(id: string, src: string): this{
+    addImage(id: string, src: string): this{
         this.renderSystem.addResource(id, src);
         return this;
     }
-    addSoundResource(id: string, src: string): this{
+    addSound(id: string, src: string): this{
         this.soundSystem.addResource(id, src);
         return this;
     }
@@ -76,9 +78,21 @@ export default class App {
         this.renderSystem.loadAll();
         this.soundSystem.loadAll();
     }
+    getTexture(id: string): EGAK.Texture{
+        return this.renderSystem.loader.get(id);
+    }
+    getAudio(id: string): NARAS.Audio{
+        return this.soundSystem.loader.get(id);
+    }
 
     private _loadThen: Function = ()=>{};
     loadThen(func: Function): void{
         this._loadThen = func;
+    }
+
+    mainLoop: (delta: number, info?: Object)=>void = (delta, info)=>{
+        this.renderSystem.clearScreen(0, 0, 0, 1);
+        this.baseScene.update(delta, info);
+        this.renderSystem.render();
     }
 }

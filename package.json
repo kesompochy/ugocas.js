@@ -22,7 +22,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
-    "egak.js": "^1.4.4",
-    "naras.js": "^1.2.3"
+    "egak.js": "^1.5.2",
+    "naras.js": "^1.2.4"
   }
 }
