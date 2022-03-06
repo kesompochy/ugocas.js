@@ -14,7 +14,6 @@ const main = () => {
 
 
         const fullActor = new UGOCAS.FullActor(UGOCAS.TextureLoader.get('image'), ['sound', UGOCAS.AudioLoader.get('sound')]);
-        fullActor.x = 100;
         fullActor.position.set(100, 50);
         fullActor.anchor.x = 52;
         fullActor.anchor.y = 22;
@@ -33,7 +32,7 @@ const main = () => {
                 v*=-1;
             }
 
-            //actor.sprite.rotation += Math.PI/30*delta;
+            fullActor.rotation += Math.PI/30 * v;
         }
 
         app.start();
