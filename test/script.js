@@ -11,27 +11,36 @@ const main = () => {
 
 
     const setup = () => {
-        const actor = new UGOCAS.Actor(UGOCAS.TextureLoader.get('image'));
-        //actor.sprite.x = 100;
-        actor.sprite.y = 100;
-        //actor.sprite.anchor.x = 50;
-        //actor.sprite.anchor.y = 20;
-        let v = 1;
-        actor.act = (delta, info) => {
-            actor.sprite.x += v;
-            actor.sprite.scale.x = Math.sign(v);
 
-            if(actor.sprite.x > 300) v *= -1;
-            if(actor.sprite.x < 0) v*=-1;
+
+        const fullActor = new UGOCAS.FullActor(UGOCAS.TextureLoader.get('image'), ['sound', UGOCAS.AudioLoader.get('sound')]);
+        fullActor.x = 100;
+        fullActor.position.set(100, 50);
+        fullActor.anchor.x = 52;
+        fullActor.anchor.y = 22;
+        let v = 1;
+        app.baseScene.addChild(fullActor);
+
+        fullActor.act = () => {
+            fullActor.x += v;
+            fullActor.scale.x = Math.sign(v);
+
+            if(fullActor.x > 100) {
+                v *= -1;
+                fullActor.play();
+            }
+            if(fullActor.x < 0){
+                v*=-1;
+            }
 
             //actor.sprite.rotation += Math.PI/30*delta;
         }
-        app.baseScene.addChild(actor);
 
         app.start();
     };
 
     app.addImage('image', './images/image.png', 'NEAREST');
+    app.addSound('sound', './sounds/sound1.wav');
     app.loadThen(setup);
     app.loadAll();
     

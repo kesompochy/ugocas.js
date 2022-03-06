@@ -2,6 +2,7 @@ import * as EGAK from 'egak.js';
 import * as NARAS from 'naras.js';
 import Ticker from '../ticker';
 import Scene from '../scene';
+import { TickingFunc } from '../ticker/ticker';
 
 
 interface IAppOptions {
@@ -90,7 +91,7 @@ export default class App {
         this._loadThen = func;
     }
 
-    mainLoop: (delta: number, info?: Object)=>void = (delta, info)=>{
+    mainLoop: TickingFunc = (delta, info)=>{
         this.renderSystem.clearScreen(0, 0, 0, 1);
         this.baseScene.update(delta, info);
         this.renderSystem.render();

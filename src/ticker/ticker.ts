@@ -1,6 +1,6 @@
 const MILLI = 1000;
 
-type TickingFunc = (delta: number, info?: Object)=>void;
+export type TickingFunc = (delta?: number, info?: Object)=>void;
 
 export default class Ticker {
     private _FPS: number = 60;
