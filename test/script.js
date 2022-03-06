@@ -18,16 +18,16 @@ const main = () => {
         actor.sprite.anchor.y = 22;
         let v = 1;
 
-        const soundActor = new UGOCAS.SoundActor(UGOCAS.AudioLoader.get('sound'));
+        const soundActor = new UGOCAS.SoundActor(['sound', UGOCAS.AudioLoader.get('sound')]);
         app.baseScene.addChild(soundActor);
 
         actor.act = (delta, info) => {
             actor.x += v;
             actor.scale.x = Math.sign(v);
 
-            if(actor.x > 300) {
+            if(actor.x > 100) {
                 v *= -1;
-                soundActor.play('sound');
+                soundActor.play();
             }
             if(actor.x < 0){
                 v*=-1;

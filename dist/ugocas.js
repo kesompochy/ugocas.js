@@ -62,21 +62,21 @@ var scene_1 = __importDefault(__webpack_require__(/*! ../scene */ "./src/scene/i
 var Actor = /** @class */ (function (_super) {
     __extends(Actor, _super);
     function Actor() {
-        return _super.call(this) || this;
-    }
-    Actor.prototype.update = function (delta, givenInfo) {
-        var _this = this;
-        this.act(delta, givenInfo);
-        this.children.forEach(function (actor) {
-            var info = {};
-            actor.needsInfoNames.forEach(function (name) {
-                info[name] = _this[name];
+        var _this = _super.call(this) || this;
+        _this.update = function (delta, givenInfo) {
+            _this.act(delta, givenInfo);
+            _this.children.forEach(function (actor) {
+                var info = {};
+                actor.needsInfoNames.forEach(function (name) {
+                    info[name] = _this[name];
+                });
+                actor.update(delta, info);
             });
-            actor.update(delta, info);
-        });
-    };
-    Actor.prototype.act = function (delta, info) {
-    };
+        };
+        _this.act = function (delta, info) {
+        };
+        return _this;
+    }
     return Actor;
 }(scene_1.default));
 exports["default"] = Actor;
@@ -138,14 +138,54 @@ var actor_1 = __importDefault(__webpack_require__(/*! ./actor */ "./src/actor/ac
 var naras_js_1 = __webpack_require__(/*! naras.js */ "./node_modules/naras.js/dist/naras.min.js");
 var SoundActor = /** @class */ (function (_super) {
     __extends(SoundActor, _super);
-    function SoundActor(audio) {
+    function SoundActor() {
+        var audioInfos = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            audioInfos[_i] = arguments[_i];
+        }
         var _this = _super.call(this) || this;
-        _this._sound = new naras_js_1.Sound(audio);
-        _this._mixer.addChild(_this._sound);
+        _this._sounds = new Map();
+        audioInfos.forEach(function (info) {
+            _this.addSound(info[0], info[1]);
+        });
         return _this;
     }
-    SoundActor.prototype.play = function () {
-        this.mixer.play();
+    SoundActor.prototype.play = function (id) {
+        if (id) {
+            this._sounds.get(id).play();
+        }
+        else {
+            this.mixer.play();
+        }
+    };
+    SoundActor.prototype.stop = function (id) {
+        if (id) {
+            this._sounds.get(id).stop();
+        }
+        else {
+            this.mixer.stop();
+        }
+    };
+    SoundActor.prototype.restart = function (id) {
+        if (id) {
+            this._sounds.get(id).restart();
+        }
+        else {
+            this.mixer.restart();
+        }
+    };
+    SoundActor.prototype.pause = function (id) {
+        if (id) {
+            this._sounds.get(id).pause();
+        }
+        else {
+            this.mixer.pause();
+        }
+    };
+    SoundActor.prototype.addSound = function (id, audio) {
+        var sound = new naras_js_1.Sound(audio);
+        this.mixer.addChild(sound);
+        this._sounds.set(id, sound);
     };
     return SoundActor;
 }(actor_1.default));
@@ -476,10 +516,20 @@ var egak_js_1 = __webpack_require__(/*! egak.js */ "./node_modules/egak.js/dist/
 var naras_js_1 = __webpack_require__(/*! naras.js */ "./node_modules/naras.js/dist/naras.min.js");
 var Scene = /** @class */ (function () {
     function Scene() {
+        var _this = this;
         this.children = new Set();
         this._stage = new egak_js_1.Stage();
         this._mixer = new naras_js_1.Mixer();
         this.needsInfoNames = new Set();
+        this.update = function (delta, info) {
+            _this.children.forEach(function (actor) {
+                var info = {};
+                actor.needsInfoNames.forEach(function (name) {
+                    info[name] = _this[name];
+                });
+                actor.update(delta, info);
+            });
+        };
     }
     Object.defineProperty(Scene.prototype, "stage", {
         get: function () {
@@ -495,16 +545,6 @@ var Scene = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
-    Scene.prototype.update = function (delta, givenInfo) {
-        var _this = this;
-        this.children.forEach(function (actor) {
-            var info = {};
-            actor.needsInfoNames.forEach(function (name) {
-                info[name] = _this[name];
-            });
-            actor.update(delta, info);
-        });
-    };
     Scene.prototype.needs = function () {
         var name = [];
         for (var _i = 0; _i < arguments.length; _i++) {

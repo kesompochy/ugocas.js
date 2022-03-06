@@ -1,5 +1,6 @@
 import {Stage} from 'egak.js';
 import {Mixer} from 'naras.js';
+import { TickingFunc } from '../ticker/ticker';
 
 export default class Scene{
     children: Set<Scene> = new Set();
@@ -15,7 +16,7 @@ export default class Scene{
     needsInfoNames: Set<string> = new Set();
 
 
-    update(delta: number, givenInfo?: Object): void{
+    update: TickingFunc = (delta?: number, info?: Object) =>{
         this.children.forEach((actor: Scene)=>{
             const info = {};
             actor.needsInfoNames.forEach((name: string)=>{
