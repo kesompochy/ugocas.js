@@ -1,15 +1,10 @@
 import Scene from '../scene';
-import {Sprite, Texture} from 'egak.js';
 
 import { TickingFunc } from '../ticker/ticker';
 
 export default class Actor extends Scene{
-    sprite: Sprite;
-    private _actions: Set<TickingFunc> = new Set();
-    constructor(texture?: Texture){
+    constructor(){
         super();
-        this.sprite = new Sprite(texture);
-        this.stage.addChild(this.sprite);
     }
 
     update(delta: number, givenInfo?: Object): void{
@@ -25,8 +20,7 @@ export default class Actor extends Scene{
     }
 
     act(delta: number, info?: Object): void{
-        this._actions.forEach((action)=>{
-            action(delta, info);
-        })
+
     }
+
 }

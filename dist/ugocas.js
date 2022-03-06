@@ -59,15 +59,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var scene_1 = __importDefault(__webpack_require__(/*! ../scene */ "./src/scene/index.ts"));
-var egak_js_1 = __webpack_require__(/*! egak.js */ "./node_modules/egak.js/dist/egak.min.js");
 var Actor = /** @class */ (function (_super) {
     __extends(Actor, _super);
-    function Actor(texture) {
-        var _this = _super.call(this) || this;
-        _this.sprite = new egak_js_1.Sprite(texture);
-        _this.stage.addChild(_this.sprite);
-        return _this;
+    function Actor() {
+        return _super.call(this) || this;
     }
+    Actor.prototype.update = function (delta, givenInfo) {
+        var _this = this;
+        this.act(delta, givenInfo);
+        this.children.forEach(function (actor) {
+            var info = {};
+            actor.needsInfoNames.forEach(function (name) {
+                info[name] = _this[name];
+            });
+            actor.update(delta, info);
+        });
+    };
+    Actor.prototype.act = function (delta, info) {
+    };
     return Actor;
 }(scene_1.default));
 exports["default"] = Actor;
@@ -87,8 +96,109 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SpriteActor = exports.Actor = void 0;
 var actor_1 = __importDefault(__webpack_require__(/*! ./actor */ "./src/actor/actor.ts"));
-exports["default"] = actor_1.default;
+exports.Actor = actor_1.default;
+var sprite_actor_1 = __importDefault(__webpack_require__(/*! ./sprite_actor */ "./src/actor/sprite_actor.ts"));
+exports.SpriteActor = sprite_actor_1.default;
+
+
+/***/ }),
+
+/***/ "./src/actor/sprite_actor.ts":
+/*!***********************************!*\
+  !*** ./src/actor/sprite_actor.ts ***!
+  \***********************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var actor_1 = __importDefault(__webpack_require__(/*! ./actor */ "./src/actor/actor.ts"));
+var egak_js_1 = __webpack_require__(/*! egak.js */ "./node_modules/egak.js/dist/egak.min.js");
+var SpriteActor = /** @class */ (function (_super) {
+    __extends(SpriteActor, _super);
+    function SpriteActor(texture) {
+        var _this = _super.call(this) || this;
+        _this._rotation = 0;
+        //SpriteActorはstageを持たず、spriteだけを持つ。
+        _this.sprite = new egak_js_1.Sprite(texture);
+        _this._stage = _this.sprite;
+        return _this;
+    }
+    Object.defineProperty(SpriteActor.prototype, "position", {
+        get: function () {
+            return this.sprite.position;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(SpriteActor.prototype, "x", {
+        get: function () {
+            return this.sprite.x;
+        },
+        set: function (value) {
+            this.sprite.x = value;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(SpriteActor.prototype, "y", {
+        get: function () {
+            return this.sprite.y;
+        },
+        set: function (value) {
+            this.sprite.y = value;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(SpriteActor.prototype, "rotation", {
+        get: function () {
+            return this._rotation;
+        },
+        set: function (value) {
+            this._rotation = value;
+            this.sprite.rotation = value;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(SpriteActor.prototype, "scale", {
+        get: function () {
+            return this.sprite.scale;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(SpriteActor.prototype, "anchor", {
+        get: function () {
+            return this.sprite.anchor;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    return SpriteActor;
+}(actor_1.default));
+exports["default"] = SpriteActor;
 
 
 /***/ }),
@@ -262,13 +372,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.TextureLoader = exports.Text = exports.Stage = exports.Sprite = exports.SoundLoader = exports.Mixer = exports.Sound = exports.Actor = exports.Scene = exports.App = void 0;
+exports.TextureLoader = exports.Text = exports.Stage = exports.Sprite = exports.SoundLoader = exports.Mixer = exports.Sound = exports.SpriteActor = exports.Actor = exports.Scene = exports.App = void 0;
 var app_1 = __importDefault(__webpack_require__(/*! ./app */ "./src/app/index.ts"));
 exports.App = app_1.default;
 var scene_1 = __importDefault(__webpack_require__(/*! ./scene */ "./src/scene/index.ts"));
 exports.Scene = scene_1.default;
-var actor_1 = __importDefault(__webpack_require__(/*! ./actor */ "./src/actor/index.ts"));
-exports.Actor = actor_1.default;
+var actor_1 = __webpack_require__(/*! ./actor */ "./src/actor/index.ts");
+Object.defineProperty(exports, "Actor", ({ enumerable: true, get: function () { return actor_1.Actor; } }));
+Object.defineProperty(exports, "SpriteActor", ({ enumerable: true, get: function () { return actor_1.SpriteActor; } }));
 var EGAK = __importStar(__webpack_require__(/*! egak.js */ "./node_modules/egak.js/dist/egak.min.js"));
 var NARAS = __importStar(__webpack_require__(/*! naras.js */ "./node_modules/naras.js/dist/naras.min.js"));
 var Sprite = EGAK.Sprite, Stage = EGAK.Stage, Text = EGAK.Text, TextureLoader = EGAK.Loader;
@@ -316,15 +427,19 @@ var naras_js_1 = __webpack_require__(/*! naras.js */ "./node_modules/naras.js/di
 var Scene = /** @class */ (function () {
     function Scene() {
         this.children = new Set();
-        this.stage = new egak_js_1.Stage();
+        this._stage = new egak_js_1.Stage();
         this.mixer = new naras_js_1.Mixer();
         this.needsInfoNames = new Set();
     }
-    Scene.prototype.act = function (delta, info) {
-    };
-    Scene.prototype.update = function (delta, info) {
+    Object.defineProperty(Scene.prototype, "stage", {
+        get: function () {
+            return this._stage;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Scene.prototype.update = function (delta, givenInfo) {
         var _this = this;
-        this.act(delta, info);
         this.children.forEach(function (actor) {
             var info = {};
             actor.needsInfoNames.forEach(function (name) {
@@ -348,19 +463,19 @@ var Scene = /** @class */ (function () {
         return this;
     };
     Scene.prototype.addChild = function (scene) {
-        this.stage.addChild(scene.stage);
+        this._stage.addChild(scene._stage);
         this.mixer.addChild(scene.mixer);
         this.children.add(scene);
         return this;
     };
     Scene.prototype.removeChild = function (scene) {
-        this.stage.removeChild(scene.stage);
+        this._stage.removeChild(scene._stage);
         this.mixer.removeChild(scene.mixer);
         this.children.delete(scene);
         return this;
     };
     Scene.prototype.addSprite = function (sprite) {
-        this.stage.addChild(sprite);
+        this._stage.addChild(sprite);
         return this;
     };
     Scene.prototype.addSound = function (sound) {
