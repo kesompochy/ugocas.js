@@ -8,16 +8,8 @@ export default class Scene{
 
     needsInfoNames: Set<string> = new Set();
 
-    constructor(){
 
-    }
-
-    act(delta: number, info?: Object): void{
-    }
-
-    update(delta: number, info?: Object): void{
-        this.act(delta, info);
-
+    update(delta: number, givenInfo?: Object): void{
         this.children.forEach((actor: Scene)=>{
             const info = {};
             actor.needsInfoNames.forEach((name: string)=>{
