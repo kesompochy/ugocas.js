@@ -17,12 +17,21 @@ const main = () => {
         actor.sprite.anchor.x = 52;
         actor.sprite.anchor.y = 22;
         let v = 1;
+
+        const soundActor = new UGOCAS.SoundActor(UGOCAS.AudioLoader.get('sound'));
+        app.baseScene.addChild(soundActor);
+
         actor.act = (delta, info) => {
             actor.x += v;
             actor.scale.x = Math.sign(v);
 
-            if(actor.x > 300) v *= -1;
-            if(actor.x < 0) v*=-1;
+            if(actor.x > 300) {
+                v *= -1;
+                soundActor.play('sound');
+            }
+            if(actor.x < 0){
+                v*=-1;
+            }
 
             //actor.sprite.rotation += Math.PI/30*delta;
         }
@@ -32,6 +41,7 @@ const main = () => {
     };
 
     app.addImage('image', './images/image.png', 'NEAREST');
+    app.addSound('sound', './sounds/sound1.wav');
     app.loadThen(setup);
     app.loadAll();
     
