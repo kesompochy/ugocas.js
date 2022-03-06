@@ -84,6 +84,149 @@ exports["default"] = Actor;
 
 /***/ }),
 
+/***/ "./src/actor/full_actor.ts":
+/*!*********************************!*\
+  !*** ./src/actor/full_actor.ts ***!
+  \*********************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+var actor_1 = __importDefault(__webpack_require__(/*! ./actor */ "./src/actor/actor.ts"));
+var naras_js_1 = __webpack_require__(/*! naras.js */ "./node_modules/naras.js/dist/naras.min.js");
+var egak_js_1 = __webpack_require__(/*! egak.js */ "./node_modules/egak.js/dist/egak.min.js");
+var FullActor = /** @class */ (function (_super) {
+    __extends(FullActor, _super);
+    function FullActor(texture) {
+        var audioInfos = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            audioInfos[_i - 1] = arguments[_i];
+        }
+        var _this = _super.call(this) || this;
+        _this._sounds = new Map();
+        _this._rotation = 0;
+        _this.sprite = new egak_js_1.Sprite(texture);
+        _this._stage = _this.sprite;
+        audioInfos.forEach(function (info) {
+            _this.addSound(info[0], info[1]);
+        });
+        return _this;
+    }
+    FullActor.prototype.play = function (id) {
+        if (id) {
+            this._sounds.get(id).play();
+        }
+        else {
+            this.mixer.play();
+        }
+    };
+    FullActor.prototype.stop = function (id) {
+        if (id) {
+            this._sounds.get(id).stop();
+        }
+        else {
+            this.mixer.stop();
+        }
+    };
+    FullActor.prototype.restart = function (id) {
+        if (id) {
+            this._sounds.get(id).restart();
+        }
+        else {
+            this.mixer.restart();
+        }
+    };
+    FullActor.prototype.pause = function (id) {
+        if (id) {
+            this._sounds.get(id).pause();
+        }
+        else {
+            this.mixer.pause();
+        }
+    };
+    FullActor.prototype.addSound = function (id, audio) {
+        var sound = new naras_js_1.Sound(audio);
+        this.mixer.addChild(sound);
+        this._sounds.set(id, sound);
+    };
+    Object.defineProperty(FullActor.prototype, "position", {
+        get: function () {
+            return this.sprite.position;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(FullActor.prototype, "x", {
+        get: function () {
+            return this.sprite.x;
+        },
+        set: function (value) {
+            this.sprite.x = value;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(FullActor.prototype, "y", {
+        get: function () {
+            return this.sprite.y;
+        },
+        set: function (value) {
+            this.sprite.y = value;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(FullActor.prototype, "rotation", {
+        get: function () {
+            return this._rotation;
+        },
+        set: function (value) {
+            this._rotation = value;
+            this.sprite.rotation = value;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(FullActor.prototype, "scale", {
+        get: function () {
+            return this.sprite.scale;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(FullActor.prototype, "anchor", {
+        get: function () {
+            return this.sprite.anchor;
+        },
+        enumerable: false,
+        configurable: true
+    });
+    return FullActor;
+}(actor_1.default));
+exports["default"] = FullActor;
+
+
+/***/ }),
+
 /***/ "./src/actor/index.ts":
 /*!****************************!*\
   !*** ./src/actor/index.ts ***!
@@ -96,13 +239,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.SoundActor = exports.SpriteActor = exports.Actor = void 0;
+exports.FullActor = exports.SoundActor = exports.SpriteActor = exports.Actor = void 0;
 var actor_1 = __importDefault(__webpack_require__(/*! ./actor */ "./src/actor/actor.ts"));
 exports.Actor = actor_1.default;
 var sprite_actor_1 = __importDefault(__webpack_require__(/*! ./sprite_actor */ "./src/actor/sprite_actor.ts"));
 exports.SpriteActor = sprite_actor_1.default;
 var sound_actor_1 = __importDefault(__webpack_require__(/*! ./sound_actor */ "./src/actor/sound_actor.ts"));
 exports.SoundActor = sound_actor_1.default;
+var full_actor_1 = __importDefault(__webpack_require__(/*! ./full_actor */ "./src/actor/full_actor.ts"));
+exports.FullActor = full_actor_1.default;
 
 
 /***/ }),
@@ -461,7 +606,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.TextureLoader = exports.Text = exports.Stage = exports.Sprite = exports.AudioLoader = exports.Mixer = exports.Sound = exports.SoundActor = exports.SpriteActor = exports.Actor = exports.Scene = exports.App = void 0;
+exports.TextureLoader = exports.Text = exports.Stage = exports.Sprite = exports.AudioLoader = exports.Mixer = exports.Sound = exports.FullActor = exports.SoundActor = exports.SpriteActor = exports.Actor = exports.Scene = exports.App = void 0;
 var app_1 = __importDefault(__webpack_require__(/*! ./app */ "./src/app/index.ts"));
 exports.App = app_1.default;
 var scene_1 = __importDefault(__webpack_require__(/*! ./scene */ "./src/scene/index.ts"));
@@ -470,6 +615,7 @@ var actor_1 = __webpack_require__(/*! ./actor */ "./src/actor/index.ts");
 Object.defineProperty(exports, "Actor", ({ enumerable: true, get: function () { return actor_1.Actor; } }));
 Object.defineProperty(exports, "SpriteActor", ({ enumerable: true, get: function () { return actor_1.SpriteActor; } }));
 Object.defineProperty(exports, "SoundActor", ({ enumerable: true, get: function () { return actor_1.SoundActor; } }));
+Object.defineProperty(exports, "FullActor", ({ enumerable: true, get: function () { return actor_1.FullActor; } }));
 var EGAK = __importStar(__webpack_require__(/*! egak.js */ "./node_modules/egak.js/dist/egak.min.js"));
 var NARAS = __importStar(__webpack_require__(/*! naras.js */ "./node_modules/naras.js/dist/naras.min.js"));
 var Sprite = EGAK.Sprite, Stage = EGAK.Stage, Text = EGAK.Text, TextureLoader = EGAK.Loader;
