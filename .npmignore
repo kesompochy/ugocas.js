@@ -6,7 +6,7 @@ tsconfig.json
 webpack.common.js
 webpack.dev.js
 webpack.prod.js
-dist/egak.js
-dist/egak.js.map
+dist/ugocas.js
+dist/ugocas.js.map
 .vscode
 README.md
