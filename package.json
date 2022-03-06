@@ -20,5 +20,9 @@
     "webpack": "^5.70.0",
     "webpack-cli": "^4.9.2",
     "webpack-merge": "^5.8.0"
+  },
+  "dependencies": {
+    "egak.js": "^1.5.2",
+    "naras.js": "^1.2.4"
   }
 }
