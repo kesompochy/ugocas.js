@@ -1,26 +1,11 @@
 import Scene from '../scene';
-
-import { TickingFunc } from '../ticker/ticker';
+import {Sprite, Texture} from 'egak.js';
 
 export default class Actor extends Scene{
-    constructor(){
+    sprite: Sprite;
+    constructor(texture?: Texture){
         super();
+        this.sprite = new Sprite(texture);
+        this.stage.addChild(this.sprite);
     }
-
-    update(delta: number, givenInfo?: Object): void{
-        this.act(delta, givenInfo);
-
-        this.children.forEach((actor: Scene)=>{
-            const info = {};
-            actor.needsInfoNames.forEach((name: string)=>{
-                info[name] = this[name];
-            })
-            actor.update(delta, info);
-        })
-    }
-
-    act(delta: number, info?: Object): void{
-
-    }
-
 }

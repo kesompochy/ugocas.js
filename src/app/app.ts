@@ -66,12 +66,12 @@ export default class App {
     start(): void{
         this.ticker.start();
     }
-    addImage(id: string, src: string, scaleMode: string): this{
-        this.renderSystem.addResource(id, src, scaleMode);
+    addImage(id: string, src: string): this{
+        this.renderSystem.addResource(id, src);
         return this;
     }
-    addSound(id: string, src: string, scaleMode: string): this{
-        this.soundSystem.addResource(id, src, scaleMode);
+    addSound(id: string, src: string): this{
+        this.soundSystem.addResource(id, src);
         return this;
     }
     loadAll(): void{
