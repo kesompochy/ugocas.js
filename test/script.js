@@ -1,11 +1,11 @@
 //import * as UGOCAS from 'ugocas.js';
 const main = () => {
     const canvas = document.getElementById('canvas');
-    canvas.style.width = '800px';
-    canvas.style.height = '1600px';
+    canvas.style.width = '450px';
+    canvas.style.height = '600px';
     const app = new UGOCAS.App({
-        width: 400,
-        height: 800,
+        width: 300,
+        height: 400,
         canvas: canvas,
     });
 
@@ -34,6 +34,7 @@ const main = () => {
 
             fullActor.rotation += Math.PI/30 * v;
         }
+
 
         app.start();
     };

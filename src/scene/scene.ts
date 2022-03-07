@@ -13,10 +13,21 @@ export default class Scene{
         return this._mixer;
     }
 
+
     needsInfoNames: Set<string> = new Set();
 
+    constructor(){
+
+    }
+
+    act(delta: number, info?: Object): void{
+    }
+
+    update(delta: number, info?: Object): void{
+        this.act(delta, info);
 
     update: TickingFunc = (delta?: number, info?: Object) =>{
+
         this.children.forEach((actor: Scene)=>{
             const info = {};
             actor.needsInfoNames.forEach((name: string)=>{
@@ -40,6 +51,7 @@ export default class Scene{
     addChild(scene: Scene): this{
         this._stage.addChild(scene._stage);
         this._mixer.addChild(scene._mixer);
+
         this.children.add(scene);
         return this;
     }
@@ -49,4 +61,5 @@ export default class Scene{
         this.children.delete(scene);
         return this;
     }
+
 }

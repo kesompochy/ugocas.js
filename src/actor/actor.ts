@@ -1,9 +1,13 @@
 import Scene from '../scene';
 import { TickingFunc } from '../ticker/ticker';
 
+
 export default class Actor extends Scene{
-    constructor(){
+    sprite: Sprite;
+    constructor(texture?: Texture){
         super();
+        this.sprite = new Sprite(texture);
+        this.stage.addChild(this.sprite);
     }
 
     update: TickingFunc = (delta?: number, givenInfo?: Object)=>{
