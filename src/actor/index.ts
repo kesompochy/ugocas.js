@@ -4,3 +4,4 @@ import SoundActor from './sound_actor';
 import FullActor from './full_actor';
 
 export {Actor, SpriteActor, SoundActor, FullActor};
+

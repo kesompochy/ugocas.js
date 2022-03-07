@@ -1,11 +1,11 @@
 //import * as UGOCAS from 'ugocas.js';
 const main = () => {
     const canvas = document.getElementById('canvas');
-    canvas.style.width = '800px';
-    canvas.style.height = '1600px';
+    canvas.style.width = '450px';
+    canvas.style.height = '600px';
     const app = new UGOCAS.App({
-        width: 400,
-        height: 800,
+        width: 300,
+        height: 400,
         canvas: canvas,
     });
 
@@ -14,7 +14,6 @@ const main = () => {
 
 
         const fullActor = new UGOCAS.FullActor(UGOCAS.TextureLoader.get('image'), ['sound', UGOCAS.AudioLoader.get('sound')]);
-        fullActor.x = 100;
         fullActor.position.set(100, 50);
         fullActor.anchor.x = 52;
         fullActor.anchor.y = 22;
@@ -33,8 +32,9 @@ const main = () => {
                 v*=-1;
             }
 
-            //actor.sprite.rotation += Math.PI/30*delta;
+            fullActor.rotation += Math.PI/30 * v;
         }
+
 
         app.start();
     };
