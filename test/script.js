@@ -1,12 +1,13 @@
 //import * as UGOCAS from 'ugocas.js';
 const main = () => {
     const canvas = document.getElementById('canvas');
-    canvas.style.width = '800px';
-    canvas.style.height = '1600px';
+    //canvas.style.width = '800px';
+    //canvas.style.height = '1600px';
     const app = new UGOCAS.App({
         width: 400,
         height: 800,
         canvas: canvas,
+        autoStyleCanvas: true
     });
 
 
