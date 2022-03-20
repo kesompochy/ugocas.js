@@ -9,6 +9,7 @@ const main = () => {
         canvas: canvas,
         autoStyleCanvas: true
     });
+    app.backgroundColor = {r: 255, g: 2, b: 100, a: 0.5};
 
 
     const setup = () => {
