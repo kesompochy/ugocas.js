@@ -10,10 +10,12 @@
       "rootDir": "./src/",
       "sourceMap": true,
       "strict": true,
-      "target": "ES5",                    
+      "target": "ES5",
+      "declaration": true,
+      "declarationMap": true                    
     },
     "exclude": [
-      "node_modules"
+      "node_modules", "dist"
     ],
   }
   
