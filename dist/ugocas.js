@@ -482,6 +482,7 @@ var defaultAppOptions = {
     autoStart: false,
     canvas: document.createElement('canvas'),
     autoStyleCanvas: false,
+    backgroundColor: { r: 0, g: 0, b: 0, a: 1 }
 };
 var App = /** @class */ (function () {
     function App(options) {
@@ -489,7 +490,6 @@ var App = /** @class */ (function () {
         this.ticker = new ticker_1.default();
         this._width = 0;
         this._height = 0;
-        this.backgroundColor = { r: 0, g: 0, b: 0, a: 1 };
         this._loadThen = function () { };
         this.mainLoop = function (delta, info) {
             var color = _this.backgroundColor;
@@ -500,6 +500,7 @@ var App = /** @class */ (function () {
         options = Object.assign(defaultAppOptions, options);
         this._width = options.width;
         this._height = options.height;
+        this.backgroundColor = options.backgroundColor;
         this.renderSystem = new EGAK.App({
             width: this._width,
             height: this._height,

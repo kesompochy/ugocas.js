@@ -18,7 +18,7 @@ interface IAppOptions {
     autoStart?: boolean;
     canvas?: HTMLCanvasElement;
     autoStyleCanvas?: boolean;
-
+    backgroundColor?: Color;
 }
 const defaultAppOptions: IAppOptions = {
     width: 300,
@@ -26,6 +26,7 @@ const defaultAppOptions: IAppOptions = {
     autoStart: false,
     canvas: document.createElement('canvas'),
     autoStyleCanvas: false,
+    backgroundColor: {r: 0, g: 0, b: 0, a: 1}
 } as const;
  
 export default class App {
@@ -36,14 +37,14 @@ export default class App {
     private _width: number = 0;
     private _height: number = 0;
 
-    backgroundColor: Color = {r: 0, g: 0, b: 0, a: 1};
+    backgroundColor: Color;
 
     constructor(options?: IAppOptions){
         options = Object.assign(defaultAppOptions, options);
 
         this._width = options.width!;
         this._height = options.height!;
-
+        this.backgroundColor = options.backgroundColor!;
 
         this.renderSystem = new EGAK.App({
             width: this._width,
