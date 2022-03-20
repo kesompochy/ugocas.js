@@ -23,6 +23,9 @@ const main = () => {
         let v = 1;
         app.baseScene.addChild(fullActor);
 
+        const graphics = new UGOCAS.Graphics.Line([0, 0, 100, 255, 0, 1], [100, 50, 255, 0, 100, 1]);
+        fullActor.stage.addChild(graphics);
+
         fullActor.act = () => {
             fullActor.x += v;
             fullActor.scale.x = Math.sign(v);
