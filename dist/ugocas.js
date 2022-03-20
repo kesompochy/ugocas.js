@@ -610,7 +610,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.TextureLoader = exports.Text = exports.Stage = exports.Sprite = exports.AudioLoader = exports.Mixer = exports.Sound = exports.FullActor = exports.SoundActor = exports.SpriteActor = exports.Actor = exports.Scene = exports.App = void 0;
+exports.TextureLoader = exports.Graphics = exports.Text = exports.Stage = exports.Sprite = exports.AudioLoader = exports.Mixer = exports.Sound = exports.FullActor = exports.SoundActor = exports.SpriteActor = exports.Actor = exports.Scene = exports.App = void 0;
 var app_1 = __importDefault(__webpack_require__(/*! ./app */ "./src/app/index.ts"));
 exports.App = app_1.default;
 var scene_1 = __importDefault(__webpack_require__(/*! ./scene */ "./src/scene/index.ts"));
@@ -622,10 +622,11 @@ Object.defineProperty(exports, "SoundActor", ({ enumerable: true, get: function 
 Object.defineProperty(exports, "FullActor", ({ enumerable: true, get: function () { return actor_1.FullActor; } }));
 var EGAK = __importStar(__webpack_require__(/*! egak.js */ "./node_modules/egak.js/dist/egak.min.js"));
 var NARAS = __importStar(__webpack_require__(/*! naras.js */ "./node_modules/naras.js/dist/naras.min.js"));
-var Sprite = EGAK.Sprite, Stage = EGAK.Stage, Text = EGAK.Text, TextureLoader = EGAK.Loader;
+var Sprite = EGAK.Sprite, Stage = EGAK.Stage, Text = EGAK.Text, Graphics = EGAK.Graphics, TextureLoader = EGAK.Loader;
 exports.Sprite = Sprite;
 exports.Stage = Stage;
 exports.Text = Text;
+exports.Graphics = Graphics;
 exports.TextureLoader = TextureLoader;
 var Sound = NARAS.Sound, Mixer = NARAS.Mixer, AudioLoader = NARAS.Loader;
 exports.Sound = Sound;

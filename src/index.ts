@@ -8,6 +8,7 @@ import * as NARAS from 'naras.js';
 let Sprite = EGAK.Sprite,
         Stage = EGAK.Stage,
         Text = EGAK.Text,
+        Graphics = EGAK.Graphics,
         TextureLoader = EGAK.Loader;
 
 let Sound = NARAS.Sound,
@@ -16,4 +17,4 @@ let Sound = NARAS.Sound,
 
 export {App, Scene, Actor, SpriteActor, SoundActor, FullActor,
         Sound, Mixer, AudioLoader,
-        Sprite, Stage, Text, TextureLoader};
+        Sprite, Stage, Text, Graphics, TextureLoader};
