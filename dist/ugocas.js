@@ -489,9 +489,11 @@ var App = /** @class */ (function () {
         this.ticker = new ticker_1.default();
         this._width = 0;
         this._height = 0;
+        this.backgroundColor = { r: 0, g: 0, b: 0, a: 1 };
         this._loadThen = function () { };
         this.mainLoop = function (delta, info) {
-            _this.renderSystem.clearScreen(0, 0, 0, 1);
+            var color = _this.backgroundColor;
+            _this.renderSystem.clearScreen(color.r, color.g, color.b, color.a);
             _this.baseScene.update(delta, info);
             _this.renderSystem.render();
         };
