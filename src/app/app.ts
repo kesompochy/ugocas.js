@@ -4,6 +4,13 @@ import Ticker from '../ticker';
 import Scene from '../scene';
 import { TickingFunc } from '../ticker/ticker';
 
+interface Color{
+    r: number;
+    g: number;
+    b: number;
+    a: number;
+}
+
 
 interface IAppOptions {
     width?: number;
@@ -28,6 +35,8 @@ export default class App {
     baseScene: Scene;
     private _width: number = 0;
     private _height: number = 0;
+
+    backgroundColor: Color = {r: 0, g: 0, b: 0, a: 1};
 
     constructor(options?: IAppOptions){
         options = Object.assign(defaultAppOptions, options);
@@ -93,7 +102,8 @@ export default class App {
     }
 
     mainLoop: TickingFunc = (delta, info)=>{
-        this.renderSystem.clearScreen(0, 0, 0, 1);
+        const color = this.backgroundColor;
+        this.renderSystem.clearScreen(color.r, color.g, color.b, color.a);
         this.baseScene.update(delta, info);
         this.renderSystem.render();
     }
