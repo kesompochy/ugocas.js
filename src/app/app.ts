@@ -39,8 +39,9 @@ export default class App {
         this.renderSystem = new EGAK.App({
             width: this._width,
             height: this._height,
-            canvas: options.canvas!
-        })
+            canvas: options.canvas!,
+            autoStyleCanvas: options.autoStyleCanvas!
+        });
         this.soundSystem = new NARAS.App();
 
         this.baseScene = new Scene();
