@@ -15,5 +15,6 @@ export default class Scene {
     addChild(scene: Scene): this;
     addChildren(...scenes: Scene[]): this;
     removeChild(scene: Scene): this;
+    emit(method: string, ...arg: any[]): void;
 }
 //# sourceMappingURL=scene.d.ts.map

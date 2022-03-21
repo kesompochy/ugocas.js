@@ -61,9 +61,9 @@ export default class Scene{
         return this;
     }
 
-    emit(method: string): void{
+    emit(method: string, ...arg: any[]): void{
         if(this.parent && this.parent[method]){
-            this.parent[method]();
+            this.parent[method](arg);
         }
     }
 }
