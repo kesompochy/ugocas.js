@@ -6,7 +6,7 @@ export default class Actor extends Scene{
         super();
     }
 
-    update: TickingFunc = (delta?: number, givenInfo?: Object)=>{
+    update: TickingFunc = (delta: number, givenInfo?: Object)=>{
         this.act(delta, givenInfo);
 
         this.children.forEach((actor: Scene)=>{
@@ -18,7 +18,7 @@ export default class Actor extends Scene{
         })
     }
 
-    act: TickingFunc = (delta?: number, info?: Object) => {
+    act: TickingFunc = (delta: number, info?: Object) => {
 
     }
 
