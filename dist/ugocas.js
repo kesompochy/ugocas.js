@@ -711,15 +711,29 @@ var Scene = /** @class */ (function () {
         return this;
     };
     Scene.prototype.addChild = function (scene) {
-        this._stage.addChild(scene._stage);
-        this._mixer.addChild(scene._mixer);
-        this.children.add(scene);
+        if (scene.parent == undefined) {
+            this._stage.addChild(scene._stage);
+            this._mixer.addChild(scene._mixer);
+            this.children.add(scene);
+            scene.parent = this;
+        }
+        return this;
+    };
+    Scene.prototype.addChildren = function () {
+        var scenes = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            scenes[_i] = arguments[_i];
+        }
+        for (var i = 0, len = scenes.length; i < len; i++) {
+            this.addChild(scenes[i]);
+        }
         return this;
     };
     Scene.prototype.removeChild = function (scene) {
         this._stage.removeChild(scene._stage);
         this._mixer.removeChild(scene._mixer);
         this.children.delete(scene);
+        scene.parent = undefined;
         return this;
     };
     return Scene;
