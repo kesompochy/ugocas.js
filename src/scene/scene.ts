@@ -17,7 +17,7 @@ export default class Scene{
     needsInfoNames: Set<string> = new Set();
 
 
-    update: TickingFunc = (delta?: number, info?: Object) =>{
+    update: TickingFunc = (delta: number, info?: Object) =>{
         this.children.forEach((actor: Scene)=>{
             const info = {};
             actor.needsInfoNames.forEach((name: string)=>{

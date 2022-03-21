@@ -1,4 +1,4 @@
-export declare type TickingFunc = (delta?: number, info?: Object) => void;
+export declare type TickingFunc = (delta: number, info?: Object) => void;
 export default class Ticker {
     private _FPS;
     private _ecpectedElapsedTime;
