@@ -20,28 +20,32 @@ export default class FullActor extends Actor{
 
     play(id?: string): void{
         if(id){
-            this._sounds.get(id).play();
+            const sound = this._sounds.get(id);
+            if(sound) sound.play();
         } else {
             this.mixer.play();
         }
     }
     stop(id?: string): void{
         if(id){
-            this._sounds.get(id).stop();
+            const sound = this._sounds.get(id);
+            if(sound) sound.stop();
         } else {
             this.mixer.stop();
         }
     }
     restart(id?: string): void{
         if(id){
-            this._sounds.get(id).restart();
+            const sound = this._sounds.get(id);
+            if(sound) sound.restart();
         } else {
             this.mixer.restart();
         }
     }
     pause(id?: string): void{
         if(id){
-            this._sounds.get(id).pause();
+            const sound = this._sounds.get(id);
+            if(sound) sound.pause();
         } else {
             this.mixer.pause();
         }

@@ -28,7 +28,7 @@ export default class App {
     constructor(options?: IAppOptions);
     start(): void;
     addImage(id: string, src: string, scaleMode: string): this;
-    addSound(id: string, src: string, scaleMode: string): this;
+    addSound(id: string, src: string): this;
     loadAll(): void;
     getTexture(id: string): EGAK.Texture;
     getAudio(id: string): NARAS.Audio;
