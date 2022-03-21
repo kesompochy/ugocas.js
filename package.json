@@ -1,6 +1,6 @@
 {
   "name": "ugocas.js",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "",
   "main": "./dist/ugocas.min.js",
   "types": "./dist/index.d.ts",
