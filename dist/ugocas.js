@@ -658,10 +658,35 @@ exports["default"] = scene_1.default;
 /*!****************************!*\
   !*** ./src/scene/scene.ts ***!
   \****************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
 
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 var egak_js_1 = __webpack_require__(/*! egak.js */ "./node_modules/egak.js/dist/egak.min.js");
 var naras_js_1 = __webpack_require__(/*! naras.js */ "./node_modules/naras.js/dist/naras.min.js");
@@ -735,6 +760,16 @@ var Scene = /** @class */ (function () {
         this.children.delete(scene);
         scene.parent = undefined;
         return this;
+    };
+    Scene.prototype.emit = function (method) {
+        var _a;
+        var arg = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            arg[_i - 1] = arguments[_i];
+        }
+        if (this.parent && this.parent[method]) {
+            (_a = this.parent)[method].apply(_a, __spreadArray([], __read(arg), false));
+        }
     };
     return Scene;
 }());
