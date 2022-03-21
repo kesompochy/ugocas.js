@@ -2,8 +2,8 @@ import Actor from './actor';
 import { Sprite, Texture } from 'egak.js';
 export default class SpriteActor extends Actor {
     readonly sprite: Sprite;
-    constructor(texture: Texture);
-    get position(): any;
+    constructor(texture: Texture | undefined);
+    get position(): import("egak.js/dist/display/abstract_display_object").TwoDemensionParam;
     set x(value: number);
     set y(value: number);
     get x(): number;
@@ -11,7 +11,7 @@ export default class SpriteActor extends Actor {
     private _rotation;
     set rotation(value: number);
     get rotation(): number;
-    get scale(): any;
-    get anchor(): any;
+    get scale(): import("egak.js/dist/display/abstract_display_object").TwoDemensionParam;
+    get anchor(): import("egak.js/dist/display/stage").Anchor;
 }
 //# sourceMappingURL=sprite_actor.d.ts.map

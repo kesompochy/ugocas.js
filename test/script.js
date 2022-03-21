@@ -26,7 +26,7 @@ const main = () => {
         const graphics = new UGOCAS.Graphics.Circle(
             0, 0, 100, 0, 0, 100, 1, 0, Math.PI*2
         );
-        fullActor.stage.addChild(graphics);
+        app.baseScene.stage.addChild(graphics);
 
         app.baseScene.emitTest = (hoge, foo) => {
             console.log(hoge, foo);

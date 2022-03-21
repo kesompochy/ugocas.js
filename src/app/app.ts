@@ -82,8 +82,8 @@ export default class App {
         this.renderSystem.addResource(id, src, scaleMode);
         return this;
     }
-    addSound(id: string, src: string, scaleMode: string): this{
-        this.soundSystem.addResource(id, src, scaleMode);
+    addSound(id: string, src: string): this{
+        this.soundSystem.addResource(id, src);
         return this;
     }
     loadAll(): void{
