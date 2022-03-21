@@ -28,6 +28,10 @@ const main = () => {
         );
         fullActor.stage.addChild(graphics);
 
+        app.baseScene.emitTest = (hoge, foo) => {
+            console.log(hoge, foo);
+        }
+
         fullActor.act = () => {
             fullActor.x += v;
             fullActor.scale.x = Math.sign(v);
@@ -40,6 +44,7 @@ const main = () => {
                 v*=-1;
             }
 
+            fullActor.emit('emitTest', 0, 'a');
             //actor.sprite.rotation += Math.PI/30*delta;
         }
 
