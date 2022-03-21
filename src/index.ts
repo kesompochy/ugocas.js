@@ -9,12 +9,15 @@ let Sprite = EGAK.Sprite,
         Stage = EGAK.Stage,
         Text = EGAK.Text,
         Graphics = EGAK.Graphics,
+        Texture = EGAK.Texture,
         TextureLoader = EGAK.Loader;
 
 let Sound = NARAS.Sound,
         Mixer = NARAS.Mixer,
-        AudioLoader = NARAS.Loader;
+        AudioLoader = NARAS.Loader,
+        Audio = NARAS.Audio,
+        Processer = NARAS.Processer;
 
 export {App, Scene, Actor, SpriteActor, SoundActor, FullActor,
-        Sound, Mixer, AudioLoader,
-        Sprite, Stage, Text, Graphics, TextureLoader};
+        Sound, Mixer, AudioLoader, Audio, Processer,
+        Sprite, Stage, Text, Graphics, Texture, TextureLoader};

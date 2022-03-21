@@ -1,6 +1,6 @@
 {
   "name": "ugocas.js",
-  "version": "1.4.1",
+  "version": "1.4.3",
   "description": "",
   "main": "./dist/ugocas.min.js",
   "types": "./dist/index.d.ts",
@@ -23,7 +23,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
-    "egak.js": "^1.8.3",
-    "naras.js": "^1.2.8"
+    "egak.js": "^1.8.6",
+    "naras.js": "^1.2.11"
   }
 }
