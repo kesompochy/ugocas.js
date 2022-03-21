@@ -4,6 +4,7 @@ import { TickingFunc } from '../ticker/ticker';
 
 export default class Scene{
     children: Set<Scene> = new Set();
+    parent: Scene | undefined;
     protected _stage: Stage = new Stage();
     get stage(): Stage{
         return this._stage;
@@ -38,15 +39,25 @@ export default class Scene{
     }
 
     addChild(scene: Scene): this{
-        this._stage.addChild(scene._stage);
-        this._mixer.addChild(scene._mixer);
-        this.children.add(scene);
+        if(scene.parent == undefined){
+            this._stage.addChild(scene._stage);
+            this._mixer.addChild(scene._mixer);
+            this.children.add(scene);
+            scene.parent = this;
+        }
+        return this;
+    }
+    addChildren(...scenes: Scene[]): this{
+        for(let i=0, len=scenes.length;i<len;i++){
+            this.addChild(scenes[i]);
+        }
         return this;
     }
     removeChild(scene: Scene): this{
         this._stage.removeChild(scene._stage);
         this._mixer.removeChild(scene._mixer);
         this.children.delete(scene);
+        scene.parent = undefined;
         return this;
     }
 }

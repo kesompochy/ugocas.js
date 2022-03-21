@@ -3,6 +3,7 @@ import { Mixer } from 'naras.js';
 import { TickingFunc } from '../ticker/ticker';
 export default class Scene {
     children: Set<Scene>;
+    parent: Scene | undefined;
     protected _stage: Stage;
     get stage(): Stage;
     protected _mixer: Mixer;
@@ -12,6 +13,7 @@ export default class Scene {
     needs(...name: string[]): this;
     unneeds(name: string): this;
     addChild(scene: Scene): this;
+    addChildren(...scenes: Scene[]): this;
     removeChild(scene: Scene): this;
 }
 //# sourceMappingURL=scene.d.ts.map
