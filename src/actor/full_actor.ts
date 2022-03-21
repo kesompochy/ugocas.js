@@ -7,7 +7,7 @@ export default class FullActor extends Actor{
     private _sounds: Map<string, Sound> = new Map();
     readonly sprite: Sprite;
 
-    constructor(texture: Texture, ...audioInfos: Array<[string, Audio]>){
+    constructor(texture: Texture | undefined, ...audioInfos: Array<[string, Audio]>){
         super();
 
         this.sprite = new Sprite(texture);

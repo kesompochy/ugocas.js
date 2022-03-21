@@ -7,7 +7,7 @@ import {Sprite, Texture} from 'egak.js';
 export default class SpriteActor extends Actor{
     readonly sprite: Sprite;
 
-    constructor(texture: Texture){
+    constructor(texture: Texture | undefined){
         super();
 
         //SpriteActorはstageを持たず、spriteだけを持つ。

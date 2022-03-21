@@ -2,7 +2,7 @@ import Actor from './actor';
 import { Sprite, Texture } from 'egak.js';
 export default class SpriteActor extends Actor {
     readonly sprite: Sprite;
-    constructor(texture: Texture);
+    constructor(texture: Texture | undefined);
     get position(): import("egak.js/dist/display/abstract_display_object").TwoDemensionParam;
     set x(value: number);
     set y(value: number);

@@ -4,7 +4,7 @@ import { Sprite, Texture } from 'egak.js';
 export default class FullActor extends Actor {
     private _sounds;
     readonly sprite: Sprite;
-    constructor(texture: Texture, ...audioInfos: Array<[string, Audio]>);
+    constructor(texture: Texture | undefined, ...audioInfos: Array<[string, Audio]>);
     play(id?: string): void;
     stop(id?: string): void;
     restart(id?: string): void;
