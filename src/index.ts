@@ -1,23 +1,5 @@
-import App from './app';
-import Scene from './scene';
-import {Actor, SpriteActor, SoundActor, FullActor} from './actor';
+import App from "./app";
+import Scene from "./scene";
+import { Actor } from "./actor";
 
-import * as EGAK from 'egak.js';
-import * as NARAS from 'naras.js';
-
-let Sprite = EGAK.Sprite,
-        Stage = EGAK.Stage,
-        TextSprite = EGAK.Text,
-        Graphics = EGAK.Graphics,
-        Texture = EGAK.Texture,
-        TextureLoader = EGAK.Loader;
-
-let Sound = NARAS.Sound,
-        Mixer = NARAS.Mixer,
-        AudioLoader = NARAS.Loader,
-        Audio = NARAS.Audio,
-        Processer = NARAS.Processer;
-
-export {App, Scene, Actor, SpriteActor, SoundActor, FullActor,
-        Sound, Mixer, AudioLoader, Audio, Processer,
-        Sprite, Stage, TextSprite, Graphics, Texture, TextureLoader};
+export { App, Scene, Actor };
