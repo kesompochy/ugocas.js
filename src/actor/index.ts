@@ -1,6 +1,3 @@
-import Actor from './actor';
-import SpriteActor from './sprite_actor';
-import SoundActor from './sound_actor';
-import FullActor from './full_actor';
+import Actor from "./actor";
 
-export {Actor, SpriteActor, SoundActor, FullActor};
+export { Actor };

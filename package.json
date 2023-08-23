@@ -21,6 +21,7 @@
     "prettier": "^3.0.2",
     "typescript": "^4.6.2",
     "vite": "^4.4.9",
-    "vitest": "^0.34.2"
+    "vitest": "^0.34.2",
+    "tsc-paths-resolver": "^0.1.3"
   }
 }
