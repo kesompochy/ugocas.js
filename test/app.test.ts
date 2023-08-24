@@ -3,7 +3,7 @@ import Ticker from "~/ticker";
 import Scene from "~/scene";
 
 describe("App", () => {
-  let app;
+  let app: App;
   beforeAll(() => {
     app = new App();
   });
