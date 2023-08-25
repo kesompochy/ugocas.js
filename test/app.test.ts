@@ -16,4 +16,10 @@ describe("App", () => {
   it("should have the base scene", () => {
     expect(app.baseScene).toBeInstanceOf(Scene);
   });
+  it("can start the app", () => {
+    expect(app.start).toBeDefined();
+  });
+  it("can stop the app", () => {
+    expect(app.stop).toBeDefined();
+  });
 });

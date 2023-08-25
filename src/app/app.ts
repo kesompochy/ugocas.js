@@ -25,6 +25,9 @@ export default class App {
   start(): void {
     this.ticker.start();
   }
+  stop(): void {
+    this.ticker.stop();
+  }
 
   mainLoop: TickingFunc = (delta, info) => {
     this.baseScene.update(delta, info);
