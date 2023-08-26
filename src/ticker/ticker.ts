@@ -12,10 +12,15 @@ export default class Ticker {
 
   private _animationRequest: number | undefined;
 
-  constructor(options?: { FPS?: number; permittedDelay?: number }) {
+  constructor(options?: {
+    FPS?: number;
+    permittedDelay?: number;
+    jobs: TickingFunc[];
+  }) {
     if (options && options.FPS) this.FPS = options.FPS;
     if (options && options.permittedDelay)
       this.permittedDelay = options.permittedDelay;
+    if (options && options.jobs) options.jobs.forEach((job) => this.add(job));
   }
 
   private _mainloop: (timeStamp: number) => void = (timeStamp: number) => {
