@@ -9,7 +9,7 @@ const defaultAppOptions: IAppOptions = {
 } as const;
 
 export default class App {
-  ticker: Ticker = new Ticker();
+  ticker: Ticker;
   baseScene: Scene;
 
   constructor(options?: IAppOptions) {
@@ -17,9 +17,13 @@ export default class App {
 
     this.baseScene = new Scene();
 
-    this.ticker.add(this.mainLoop.bind(this));
+    this.ticker = new Ticker({
+      FPS: 60,
+      permittedDelay: 2,
+      jobs: [this.mainLoop.bind(this)],
+    });
     if (options.autoStart!) {
-      this.ticker.start();
+      this.start();
     }
   }
   start(): void {
@@ -29,7 +33,7 @@ export default class App {
     this.ticker.stop();
   }
 
-  mainLoop: TickingFunc = (delta, info) => {
+  private mainLoop: TickingFunc = (delta, info) => {
     this.baseScene.update(delta, info);
   };
 }
