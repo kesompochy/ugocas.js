@@ -35,26 +35,45 @@ describe("Ticker", () => {
     });
 
     describe("when started", () => {
-      it("should have an animationRequest", () => {
+      it("should have called callback function", () => {
         window.requestAnimationFrame = vi.fn((callback: Function): number => {
-          //callback();
+          setTimeout(callback, 1);
           return 1;
         });
         ticker.start();
         expect(requestAnimationFrame).toHaveBeenCalled();
       });
     });
+    describe("when stopped", () => {
+      it("should have called cancelAnimationFrame", () => {
+        window.cancelAnimationFrame = vi.fn((id: number): void => void 0);
+        ticker.stop();
+        expect(cancelAnimationFrame).toHaveBeenCalled();
+      });
+    });
   });
 
   describe("with options", () => {
+    let job = () => {};
     beforeAll(() => {
-      ticker = new Ticker({ FPS: 120, permittedDelay: 4 });
+      ticker = new Ticker({ FPS: 120, permittedDelay: 4, jobs: [job] });
     });
     it("should have a FPS property", () => {
       expect(ticker.FPS).toBe(120);
     });
     it("should have a permittedDelay property", () => {
       expect(ticker.permittedDelay).toBe(4);
+    });
+    it("should have a job", () => {
+      expect(ticker.jobs.has(job)).toBeTruthy();
+    });
+    it("should have done its job after its start", () => {
+      window.requestAnimationFrame = vi.fn((callback: Function): number => {
+        setTimeout(callback, 1);
+        return 1;
+      });
+      ticker.start();
+      expect(requestAnimationFrame).toHaveBeenCalled();
     });
   });
 });

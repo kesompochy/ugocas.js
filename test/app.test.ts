@@ -22,4 +22,15 @@ describe("App", () => {
   it("can stop the app", () => {
     expect(app.stop).toBeDefined();
   });
+
+  describe("with options", () => {
+    let app: App;
+    beforeAll(() => {
+      app = new App({ autoStart: true });
+    });
+    it("can start the app automatically", () => {
+      const spy = vi.spyOn(app, "start");
+      expect(spy).toHaveBeenCalled();
+    });
+  });
 });
