@@ -31,7 +31,9 @@ export default class Ticker {
       func(delta);
     });
 
-    this._animationRequest = requestAnimationFrame(this._mainloop.bind(this));
+    this._animationRequest = window.requestAnimationFrame(
+      this._mainloop.bind(this)
+    );
   };
 
   private _calcDelta(timeStamp: number): number {
@@ -45,10 +47,11 @@ export default class Ticker {
   }
 
   start(): void {
-    this._animationRequest = requestAnimationFrame(this._mainloop);
+    this._animationRequest = window.requestAnimationFrame(this._mainloop);
   }
   stop(): void {
-    if (this._animationRequest) cancelAnimationFrame(this._animationRequest);
+    if (this._animationRequest)
+      window.cancelAnimationFrame(this._animationRequest);
   }
 
   add(func: TickingFunc): this {
