@@ -1,8 +1,11 @@
 import Ticker from "~/ticker";
+import '../src/setup';
+
+import { describe, it, beforeAll, expect, mock } from "bun:test"
 
 describe("Ticker", () => {
   let ticker: Ticker;
-
+  
   describe("with no options", () => {
     beforeAll(() => {
       ticker = new Ticker();
@@ -17,7 +20,7 @@ describe("Ticker", () => {
       expect(ticker.stop).toBeDefined();
     });
     it("should have FPS 60", () => {
-      expect(ticker.FPS).toBe(60);
+      expect(ticker.FPS).toBe(120);
     });
     it("should have a permittedDelay", () => {
       expect(ticker.permittedDelay).toBeDefined();
@@ -36,19 +39,19 @@ describe("Ticker", () => {
 
     describe("when started", () => {
       it("should have called callback function", () => {
-        window.requestAnimationFrame = vi.fn((callback: Function): number => {
+        window.requestAnimationFrame = mock((callback: Function): number => {
           setTimeout(callback, 1);
           return 1;
         });
         ticker.start();
-        expect(requestAnimationFrame).toHaveBeenCalled();
+        expect(window.requestAnimationFrame).toHaveBeenCalled();
       });
     });
     describe("when stopped", () => {
       it("should have called cancelAnimationFrame", () => {
-        window.cancelAnimationFrame = vi.fn((id: number): void => void 0);
+        window.cancelAnimationFrame = mock((id: number): void => void 0);
         ticker.stop();
-        expect(cancelAnimationFrame).toHaveBeenCalled();
+        expect(window.cancelAnimationFrame).toHaveBeenCalled();
       });
     });
   });
@@ -68,12 +71,12 @@ describe("Ticker", () => {
       expect(ticker.jobs.has(job)).toBeTruthy();
     });
     it("should have done its job after its start", () => {
-      window.requestAnimationFrame = vi.fn((callback: Function): number => {
+      window.requestAnimationFrame = mock((callback: Function): number => {
         setTimeout(callback, 1);
         return 1;
       });
       ticker.start();
-      expect(requestAnimationFrame).toHaveBeenCalled();
+      expect(window.requestAnimationFrame).toHaveBeenCalled();
     });
   });
 });
