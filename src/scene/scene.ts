@@ -1,44 +1,61 @@
-import { TickingFunc } from "../ticker/ticker";
+interface Options {
+  children?: {
+    scene: Scene,
+    props?: { [key: string]: () => any },
+  }[];
+}
 
-export default class Scene {
-  children: Set<Scene> = new Set();
-  parent: Scene | undefined;
+export default class Scene<T extends object = {}, > {
+  children: Map<Scene<any>, { [key: string]: () => any }> = new Map();
 
-  needsInfoNames: Set<string> = new Set();
+  parent: Scene<any> | undefined;
 
-  constructor() {}
+  props: Set<string> = new Set();
 
-  update(delta?: number, info?: Object) {
-    this.children.forEach((actor: Scene) => {
-      const info = {};
-      actor.needsInfoNames.forEach((name: string) => {
-        info[name] = this[name];
+  constructor(options?: Options) {
+    const { children } = options || {};
+    if (children !== undefined ) {
+      this.addChildren(...children);
+    }
+  }
+
+  update(delta?: number, props?: T) {
+    this.children.forEach((propsMap, scene) => {
+      const data = {};
+      scene.props.forEach((name: string) => {
+        data[name] = propsMap[name]();
       });
-      actor.update(delta, info);
+      scene.update(delta, data);
     });
   }
 
-  needs(...name: string[]): this {
-    for (let i = 0, len = name.length; i < len; i++) {
-      this.needsInfoNames.add(name[i]);
-    }
-    return this;
-  }
-  unneeds(name: string): this {
-    this.needsInfoNames.delete(name);
+  need(keys: string[]): this {
+    keys.forEach((key) => {
+      this.props.add(key);
+    });
     return this;
   }
 
-  addChild(scene: Scene): this {
+  unneed(keys: string[]): this {
+    keys.forEach((key) => {
+      this.props.delete(key);
+    });
+    return this;
+  }
+
+  addChild<C extends object>(scene: Scene<C>, props?: { [K in keyof C]: () => C[K] }): this {
     if (scene.parent == undefined) {
-      this.children.add(scene);
+      if (props === undefined) {
+        props = {} as { [K in keyof C]: () => C[K] };
+      }
+      this.children.set(scene, props);
       scene.parent = this;
     }
     return this;
   }
-  addChildren(...scenes: Scene[]): this {
-    for (let i = 0, len = scenes.length; i < len; i++) {
-      this.addChild(scenes[i]);
+  addChildren(...children: {scene: Scene, props?: {[key: string]: ()=>any}}[]): this {
+    for (let i = 0, len = children.length; i < len; i++) {
+      this.addChild(children[i].scene, children[i].props);
     }
     return this;
   }
@@ -46,11 +63,5 @@ export default class Scene {
     this.children.delete(scene);
     scene.parent = undefined;
     return this;
-  }
-
-  emit(method: string, ...arg: any[]): void {
-    if (this.parent && this.parent[method]) {
-      this.parent[method](...arg);
-    }
   }
 }

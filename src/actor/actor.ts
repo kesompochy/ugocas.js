@@ -1,22 +1,24 @@
 import Scene from "../scene";
-import { TickingFunc } from "../ticker/ticker";
 
-export default class Actor extends Scene {
+export default class Actor<T extends object = {}> extends Scene {
+  action: (delta?: number, props?: T) => void = () => {};
   constructor() {
     super();
   }
 
-  update(delta?: number, givenInfo?: Object) {
-    this.act(delta, givenInfo);
+  update(delta?: number, props?: T) {
+    this.action(delta, props);
 
-    this.children.forEach((actor: Scene) => {
-      const info = {};
-      actor.needsInfoNames.forEach((name: string) => {
-        info[name] = this[name];
+    this.children.forEach((propsMap, scene) => {
+      const data = {};
+      scene.props.forEach((name: string) => {
+        data[name] = propsMap[name]();
       });
-      actor.update(delta, info);
+      scene.update(delta, data);
     });
   }
 
-  act(delta?: number, info?: Object) {}
+  act(callback: (delta?: number, props?: T) => void) {
+    this.action = callback;
+  }
 }
