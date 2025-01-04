@@ -1,5 +1,4 @@
 import Ticker from "~/ticker";
-import '../src/setup';
 
 import { describe, it, beforeAll, expect, mock } from "bun:test"
 
