@@ -8,14 +8,7 @@ export default class Actor<T extends object = {}> extends Scene {
 
   update(delta?: number, props?: T) {
     this.action(delta, props);
-
-    this.children.forEach((propsMap, scene) => {
-      const data = {};
-      scene.props.forEach((name: string) => {
-        data[name] = propsMap[name]();
-      });
-      scene.update(delta, data);
-    });
+    super.update(delta, props);
   }
 
   act(callback: (delta?: number, props?: T) => void) {
