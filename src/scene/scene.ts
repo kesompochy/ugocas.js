@@ -20,8 +20,9 @@ export default class Scene<T extends object = {}, > {
   }
 
   update(delta?: number, props?: T) {
+    void props;
     this.children.forEach((propsMap, scene) => {
-      const data = {};
+      const data: Record<string, any> = {};
       scene.props.forEach((name: string) => {
         data[name] = propsMap[name]();
       });
